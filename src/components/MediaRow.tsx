@@ -1,11 +1,26 @@
 import {MediaItem} from 'hybrid-types/DBTypes';
 
-const MediaRow = (props: {item: MediaItem}) => {
-  const {item} = props;
+const MediaRow = (props: {
+  item: MediaItem;
+  selectedItem: MediaItem | undefined;
+  setSelectedItem: (item: MediaItem | undefined) => void;
+}) => {
+  const {item, setSelectedItem} = props;
+  const onSelect = () => setSelectedItem(item);
   return (
-    <tr>
+    <tr onClick={onSelect} tabIndex={0} style={{cursor: 'pointer'}}>
       <td>
         <img src={item.thumbnail} alt={item.title} />
+        <div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedItem(item);
+            }}
+          >
+            View
+          </button>
+        </div>
       </td>
       <td>{item.title}</td>
       <td>{item.description}</td>
