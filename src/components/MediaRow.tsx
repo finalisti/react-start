@@ -1,4 +1,5 @@
 import {MediaItem} from 'hybrid-types/DBTypes';
+import {Link} from 'react-router';
 
 const MediaRow = (props: {
   item: MediaItem;
@@ -12,14 +13,7 @@ const MediaRow = (props: {
       <td>
         <img src={item.thumbnail} alt={item.title} />
         <div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedItem(item);
-            }}
-          >
-            View
-          </button>
+          <Link to="/single" state={{item}}>Show</Link>
         </div>
       </td>
       <td>{item.title}</td>
