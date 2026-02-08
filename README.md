@@ -1,4 +1,4 @@
-Open [link](https://users.metropolia.fi/~laurslaa/custom-hooks/) to view it in the browser.
+Open [link](https://users.metropolia.fi/~laurslaa/forms/) to view it in the browser.
 
 # React + TypeScript + Vite
 
