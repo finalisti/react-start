@@ -1,11 +1,11 @@
-import type {MediaItemWithOwner} from 'hybrid-types/DBTypes';
+import type {MediaItem} from 'hybrid-types/DBTypes';
 import {useState} from 'react';
 import MediaRow from '../components/MediaRow';
 import SingleView from '../components/SingleView';
 import {useMedia} from '../hooks/apiHooks';
 
 const Home = () => {
-  const [selectedItem, setSelectedItem] = useState<MediaItemWithOwner | undefined>(
+  const [selectedItem, setSelectedItem] = useState<MediaItem | undefined>(
     undefined,
   );
 
@@ -13,6 +13,8 @@ const Home = () => {
 
   return (
     <>
+      {/* Debug
+       <p>Selected item: {selectedItem?.title}</p> */}
       {selectedItem && (
         <SingleView item={selectedItem} setSelectedItem={setSelectedItem} />
       )}
@@ -22,8 +24,8 @@ const Home = () => {
           <tr>
             <th>Thumbnail</th>
             <th>Title</th>
-            <th>Owner</th>
             <th>Description</th>
+            <th>Owner</th>
             <th>Created</th>
             <th>Size</th>
             <th>Type</th>
@@ -34,7 +36,6 @@ const Home = () => {
             <MediaRow
               key={item.media_id}
               item={item}
-              selectedItem={selectedItem}
               setSelectedItem={setSelectedItem}
             />
           ))}

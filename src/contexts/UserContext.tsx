@@ -1,5 +1,5 @@
 // UserContext.tsx
-import React, {createContext, useState} from 'react';
+import React, {createContext, useCallback, useState} from 'react';
 import type {UserWithNoPassword} from 'hybrid-types/DBTypes';
 import {useAuthentication, useUser} from '../hooks/apiHooks';
 import {useLocation, useNavigate} from 'react-router';
@@ -38,7 +38,7 @@ const UserProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   // handleAutoLogin is used when the app is loaded to check if there is a valid token in local storage
-  const handleAutoLogin = async () => {
+  const handleAutoLogin = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       console.log(token);
@@ -47,10 +47,10 @@ const UserProvider = ({children}: {children: React.ReactNode}) => {
         setUser(response.user);
         navigate(location.pathname || '/');
       }
-    } catch (e) {
-      console.log((e as Error).message);
+    } catch (error) {
+      console.log((error as Error).message);
     }
-  };
+  }, [getUserByToken, location.pathname, navigate]);
 
   return (
     <UserContext.Provider

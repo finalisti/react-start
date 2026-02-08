@@ -3,10 +3,15 @@ import type {
   MediaItemWithOwner,
   UserWithNoPassword,
 } from 'hybrid-types/DBTypes';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {fetchData} from '../utils/fetch-data';
 import type {Credentials, RegisterCredentials} from '../types/LocalTypes';
-import type {LoginResponse, UserResponse} from 'hybrid-types/MessageTypes';
+import type {
+  LoginResponse,
+  MediaResponse,
+  UploadResponse,
+  UserResponse,
+} from 'hybrid-types/MessageTypes';
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
@@ -46,7 +51,31 @@ const useMedia = () => {
 
     getMedia();
   }, []);
-  return {mediaArray};
+
+  const postMedia = async (
+    file: UploadResponse,
+    inputs: Record<string, string>,
+    token: string,
+  ) => {
+    const mediaData = {
+      ...file.data,
+      ...inputs,
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(mediaData),
+    };
+    return fetchData<MediaResponse>(
+      import.meta.env.VITE_MEDIA_API + '/media',
+      options,
+    );
+  };
+
+  return {mediaArray, postMedia};
 };
 
 const useAuthentication = () => {
@@ -83,17 +112,40 @@ const useUser = () => {
     return registerResult;
   };
 
-  const getUserByToken = async (token: string) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
-    return fetchData<UserResponse>(resourceUrl + '/token', options);
-  };
+  const getUserByToken = useCallback(
+    async (token: string) => {
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      };
+      return fetchData<UserResponse>(resourceUrl + '/token', options);
+    },
+    [resourceUrl],
+  );
 
   return {postRegister, getUserByToken};
 };
 
-export {useMedia, useAuthentication, useUser};
+const useFile = () => {
+  const postFile = async (file: File, token: string) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      body: formData,
+    };
+    return fetchData<UploadResponse>(
+      import.meta.env.VITE_UPLOAD_API + '/upload',
+      options,
+    );
+  };
+
+  return {postFile};
+};
+
+export {useMedia, useAuthentication, useUser, useFile};

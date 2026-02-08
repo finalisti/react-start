@@ -1,35 +1,38 @@
-import {useLocation, NavigateFunction, useNavigate} from 'react-router';
-import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
+import type {MediaItem} from 'hybrid-types/DBTypes';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 
 const Single = () => {
-  const {state} = useLocation();
-  const item: MediaItemWithOwner = state.item;
-  const navigate: NavigateFunction = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const state = (location.state as {item?: MediaItem} | null) ?? null;
+  const item = state?.item;
+
+  useEffect(() => {
+    if (!item) navigate(-1);
+  }, [item, navigate]);
+
   if (!item) return null;
-  const isImage = item.media_type?.startsWith('image');
-  const isVideo = item.media_type?.startsWith('video');
+
   return (
-    <dialog open style={{padding: 0, border: 'none'}}>
-      <div>
-        <div>
-          <button onClick={() => navigate(-1)}>Go back</button>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          {isImage ? (
-            <img src={item.filename} alt={item.title} />
-          ) : isVideo ? (
-            <video controls src={item.filename} />
-          ) : (
-            <a href={item.filename} target="_blank" rel="noopener noreferrer">
-              Open file
-            </a>
-          )}
-        </div>
-        <h3>{item.title}</h3>
-        <p>Owner: {item.username}</p>
-        {item.description && <p>{item.description}</p>}
-      </div>
+    <dialog open>
+      <>
+        <button onClick={() => navigate(-1)}>Go back</button>
+        <h2>{item.title}</h2>
+        {item.media_type.split('/')[0] === 'image' && (
+          <img src={item.filename} alt={item.description || item.title} />
+        )}
+        {item.media_type.split('/')[0] === 'video' && (
+          <video src={item.filename} controls />
+        )}
+        <p>{item.description}</p>
+        <p>
+          Uploaded at {new Date(item.created_at).toLocaleString('en-fi')} by user id {item.user_id}
+        </p>
+      </>
     </dialog>
-  )
-}
+  );
+};
+
 export default Single;
