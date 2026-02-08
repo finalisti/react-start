@@ -1,8 +1,8 @@
-import {MediaItem} from '../types/DBTypes';
+import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 
 const SingleView = (props: {
-  item: MediaItem | undefined;
-  setSelectedItem: (item: MediaItem | undefined) => void;
+  item: MediaItemWithOwner | undefined;
+  setSelectedItem: (item: MediaItemWithOwner | undefined) => void;
 }) => {
   const {item, setSelectedItem} = props;
   if (!item) return null;
@@ -26,6 +26,7 @@ const SingleView = (props: {
           )}
         </div>
         <h3>{item.title}</h3>
+        <p>Owner: {item.username}</p>
         {item.description && <p>{item.description}</p>}
       </div>
     </dialog>

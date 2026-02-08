@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Profile from '../views/Profile';
 
 test('renders correct content for the headline', () => {

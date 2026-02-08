@@ -1,9 +1,9 @@
 import {useLocation, NavigateFunction, useNavigate} from 'react-router';
-import {MediaItem} from 'hybrid-types/DBTypes';;
+import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 
 const Single = () => {
   const {state} = useLocation();
-  const item: MediaItem = state.item;
+  const item: MediaItemWithOwner = state.item;
   const navigate: NavigateFunction = useNavigate();
   if (!item) return null;
   const isImage = item.media_type?.startsWith('image');
@@ -26,6 +26,7 @@ const Single = () => {
           )}
         </div>
         <h3>{item.title}</h3>
+        <p>Owner: {item.username}</p>
         {item.description && <p>{item.description}</p>}
       </div>
     </dialog>

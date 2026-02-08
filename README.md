@@ -1,4 +1,4 @@
-Open [link](https://users.metropolia.fi/~laurslaa/hybrid-react-build/) to view it in the browser.
+Open [link](https://users.metropolia.fi/~laurslaa/hooks/) to view it in the browser.
 
 # React + TypeScript + Vite
 
