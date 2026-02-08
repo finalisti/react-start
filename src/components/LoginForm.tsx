@@ -1,25 +1,21 @@
-import {useNavigate} from 'react-router';
-import {useAuthentication} from '../hooks/apiHooks';
 import useForm from '../hooks/formHooks';
 import type {Credentials} from '../types/LocalTypes';
-import type {LoginResponse} from 'hybrid-types/MessageTypes';
+import {useUserContext} from '../hooks/ContextHooks';
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const {postLogin} = useAuthentication();
   const initValues: Credentials = {
     username: '',
     password: '',
   };
+  const {handleLogin} = useUserContext();
 
   const doLogin = async () => {
-    //console.log(inputs);
-    // login functionalities here
-    // eslint-disable-next-line react-hooks/immutability
-    const result: LoginResponse = await postLogin(inputs as Credentials);
-    console.log('doLogin result', result);
-    localStorage.setItem('token', result.token);
-    navigate('/');
+    try {
+      // eslint-disable-next-line react-hooks/immutability
+      handleLogin(inputs as Credentials);
+    } catch (e) {
+      console.log((e as Error).message);
+    }
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(
