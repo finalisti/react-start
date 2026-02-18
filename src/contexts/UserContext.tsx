@@ -10,6 +10,7 @@ const UserContext = createContext<AuthContextType | null>(null);
 
 const UserProvider = ({children}: {children: React.ReactNode}) => {
   const [user, setUser] = useState<UserWithNoPassword | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const {postLogin} = useAuthentication();
   const {getUserByToken} = useUser();
   const navigate = useNavigate();
@@ -45,16 +46,19 @@ const UserProvider = ({children}: {children: React.ReactNode}) => {
       if (token) {
         const response = await getUserByToken(token);
         setUser(response.user);
-        navigate(location.pathname || '/');
       }
     } catch (error) {
       console.log((error as Error).message);
+      localStorage.removeItem('token');
+    } finally {
+      setLoading(true);
+      navigate(location.pathname || '/');
     }
   }, [getUserByToken, location.pathname, navigate]);
 
   return (
     <UserContext.Provider
-      value={{user, handleLogin, handleLogout, handleAutoLogin}}
+      value={{user, loading, handleLogin, handleLogout, handleAutoLogin}}
     >
       {children}
     </UserContext.Provider>

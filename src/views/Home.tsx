@@ -18,29 +18,15 @@ const Home = () => {
       {selectedItem && (
         <SingleView item={selectedItem} setSelectedItem={setSelectedItem} />
       )}
-      <h2>My Media</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Thumbnail</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Owner</th>
-            <th>Created</th>
-            <th>Size</th>
-            <th>Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mediaArray.map((item) => (
-            <MediaRow
-              key={item.media_id}
-              item={item}
-              setSelectedItem={setSelectedItem}
-            />
-          ))}
-        </tbody>
-      </table>
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {mediaArray.map((item) => (
+          <MediaRow
+            key={item.media_id}
+            item={item}
+            setSelectedItem={setSelectedItem}
+          />
+        ))}
+      </section>
     </>
   );
 };

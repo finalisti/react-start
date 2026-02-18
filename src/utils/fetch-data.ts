@@ -1,4 +1,4 @@
-import {ErrorResponse} from 'hybrid-types/MessageTypes';
+import type {ErrorResponse} from 'hybrid-types/MessageTypes';
 
 const fetchData = async <T>(
   url: string,

@@ -55,11 +55,17 @@ const Upload = () => {
 
   return (
     <>
-      <h1>Upload</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title</label>
+      <h1 className="text-center text-2xl font-semibold">Upload</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto mt-4 flex w-full max-w-2xl flex-col gap-4 rounded-md bg-stone-600 p-6 text-stone-50 shadow"
+      >
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-semibold" htmlFor="title">
+            Title
+          </label>
           <input
+            className="rounded-md border border-stone-400 bg-stone-700/60 px-3 py-2 text-stone-50 transition outline-none focus:border-stone-200 focus:ring-2 focus:ring-stone-300/40"
             name="title"
             type="text"
             id="title"
@@ -67,9 +73,12 @@ const Upload = () => {
             value={inputs.title}
           />
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-semibold" htmlFor="description">
+            Description
+          </label>
           <textarea
+            className="rounded-md border border-stone-400 bg-stone-700/60 px-3 py-2 text-stone-50 transition outline-none focus:border-stone-200 focus:ring-2 focus:ring-stone-300/40"
             name="description"
             rows={5}
             id="description"
@@ -77,9 +86,12 @@ const Upload = () => {
             value={inputs.description}
           ></textarea>
         </div>
-        <div>
-          <label htmlFor="file">File</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-semibold" htmlFor="file">
+            File
+          </label>
           <input
+            className="block w-full text-sm text-stone-200 file:mr-4 file:rounded-md file:border-0 file:bg-stone-500 file:px-4 file:py-2 file:font-semibold file:text-stone-50 hover:file:bg-stone-700"
             name="file"
             type="file"
             id="file"
@@ -89,6 +101,7 @@ const Upload = () => {
           />
         </div>
         <img
+          className="mx-auto h-48 w-48 rounded-md object-cover"
           src={
             file
               ? URL.createObjectURL(file)
@@ -98,14 +111,26 @@ const Upload = () => {
           width="200"
         />
         <button
+          className="w-full rounded-md bg-stone-500 px-4 py-2 font-semibold transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-60"
           type="submit"
           disabled={file && inputs.title.length > 3 ? false : true}
         >
           Upload
         </button>
       </form>
-      <button onClick={resetForm}>Reset</button>
-      {uploading && <p>Uploading...</p>}
+      <div className="mx-auto mt-4 w-full max-w-2xl">
+        <button
+          className="w-full rounded-md border border-stone-400 bg-transparent px-4 py-2 font-semibold text-stone-50 transition hover:bg-stone-700"
+          onClick={resetForm}
+        >
+          Reset
+        </button>
+      </div>
+      {uploading && (
+        <p className="mt-3 text-center font-semibold text-stone-50">
+          Uploading...
+        </p>
+      )}
     </>
   );
 };
