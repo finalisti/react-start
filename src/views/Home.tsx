@@ -1,11 +1,11 @@
-import type {MediaItem} from 'hybrid-types/DBTypes';
+import type {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {useState} from 'react';
 import MediaRow from '../components/MediaRow';
 import SingleView from '../components/SingleView';
 import {useMedia} from '../hooks/apiHooks';
 
 const Home = () => {
-  const [selectedItem, setSelectedItem] = useState<MediaItem | undefined>(
+  const [selectedItem, setSelectedItem] = useState<MediaItemWithOwner | undefined>(
     undefined,
   );
 

@@ -1,8 +1,9 @@
-import type {MediaItem} from 'hybrid-types/DBTypes';
+import type {MediaItemWithOwner} from 'hybrid-types/DBTypes';
+import Likes from './Likes';
 
 const SingleView = (props: {
-  item: MediaItem | undefined;
-  setSelectedItem: (item: MediaItem | undefined) => void;
+  item: MediaItemWithOwner | undefined;
+  setSelectedItem: (item: MediaItemWithOwner | undefined) => void;
 }) => {
   const {item, setSelectedItem} = props;
   return (
@@ -28,6 +29,8 @@ const SingleView = (props: {
           )}
           <div className="p-4">
             <h3 className="text-center text-2xl">{item.title}</h3>
+            <Likes item={item} />
+            <p>Owner: {item.username}</p>
             <p className="max-w-full">{item.description}</p>
             <div className="my-2 rounded-md border border-stone-400 p-2">
               <p>

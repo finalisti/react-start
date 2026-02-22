@@ -66,13 +66,6 @@ const RegisterForm = () => {
     checkEmail();
   }, [inputs.email, getEmailAvailable]);
 
-  const isFormValid =
-    inputs.username.trim().length > 2 &&
-    inputs.email.trim().length > 4 &&
-    inputs.password.trim().length > 4 &&
-    usernameAvailable &&
-    emailAvailable;
-
   return (
     <>
       <h2 className="text-center text-2xl font-semibold">Register</h2>
@@ -128,9 +121,9 @@ const RegisterForm = () => {
           )}
         </div>
         <button
-          className="mt-2 w-full rounded-md bg-stone-500 px-4 py-2 font-semibold transition hover:bg-stone-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-2 w-full rounded-md bg-stone-500 px-4 py-2 font-semibold transition hover:bg-stone-700"
           type="submit"
-          disabled={!isFormValid}
+          // TODO: disable when form is not valid
         >
           Register
         </button>
