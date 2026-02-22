@@ -1,4 +1,4 @@
-Open [link](https://users.metropolia.fi/~laurslaa/upload/) to view it in the browser.
+Open [link](https://users.metropolia.fi/~laurslaa/tailwind/) to view it in the browser.
 
 # React + TypeScript + Vite
 

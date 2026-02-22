@@ -11,5 +11,5 @@ export default defineConfig({
     globals: true,
     setupFiles: './vitest-setup.js',
   },
-  base: '/~laurslaa/upload/',
+  base: '/~laurslaa/tailwind/',
 });
