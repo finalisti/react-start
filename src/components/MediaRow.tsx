@@ -1,5 +1,14 @@
 import type {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {useUserContext} from '../hooks/ContextHooks';
+import {Button} from './ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
 
 const MediaRow = (props: {
   item: MediaItemWithOwner;
@@ -9,18 +18,25 @@ const MediaRow = (props: {
   const {user} = useUserContext();
 
   return (
-    <article className="w-full rounded-md bg-stone-600">
-      <img
-        className="h-72 w-full rounded-t-md object-cover"
-        src={item.thumbnail}
-        alt={item.title}
-      />
-      <div className="p-4">
-        <h3 className="text-center text-2xl">{item.title}</h3>
-        <p className="max-w-full overflow-clip font-bold text-nowrap text-ellipsis text-stone-300">
+    <Card className="w-full overflow-hidden">
+      <div className="relative">
+        <div className="absolute inset-0 z-10 bg-black/20 transition-colors hover:bg-black/0" />
+        <img
+          className="h-72 w-full object-cover"
+          src={item.thumbnail}
+          alt={item.title}
+        />
+      </div>
+      <CardHeader>
+        <CardTitle className="scroll-m-20 text-2xl font-semibold tracking-tight">
+          {item.title}
+        </CardTitle>
+        <CardDescription className="max-w-full overflow-hidden text-nowrap text-ellipsis">
           {item.description}
-        </p>
-        <div className="my-2 rounded-md border border-stone-400 p-2">
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="border-input text-muted-foreground rounded-md border p-2 text-sm">
           <p>
             Created at: <br />{' '}
             {new Date(item.created_at).toLocaleString('fi-FI')}
@@ -29,39 +45,42 @@ const MediaRow = (props: {
           <p>Mime-type: {item.media_type}</p>
           <p>Owner: {item.username}</p>
         </div>
-        <p>
-          <button
-            className="block w-full bg-stone-500 p-2 text-center transition-all duration-500 ease-in-out hover:bg-stone-700"
-            onClick={() => {
-              setSelectedItem(item);
-            }}
-          >
-            View
-          </button>
-          {/* User exists and owns the media item or is an admin */}
-          {user && (user.user_id === item.user_id || user?.level_name === 'Admin') && (
+      </CardContent>
+      <CardFooter className="flex flex-col gap-2">
+        <Button
+          className="w-full"
+          onClick={() => {
+            setSelectedItem(item);
+          }}
+        >
+          View
+        </Button>
+        {/* User exists and owns the media item or is an admin */}
+        {user &&
+          (user.user_id === item.user_id || user?.level_name === 'Admin') && (
             <>
-              <button
-                className="block w-full bg-stone-500 p-2 text-center transition-all duration-500 ease-in-out hover:bg-stone-700"
+              <Button
+                className="w-full"
                 onClick={() => {
                   console.log('edit media item', item, 'current user', user);
                 }}
               >
                 Edit
-              </button>
-              <button
-                className="block w-full bg-stone-500 p-2 text-center transition-all duration-500 ease-in-out hover:bg-stone-700"
+              </Button>
+
+              <Button
+                variant="destructive"
+                className="w-full"
                 onClick={() => {
                   console.log('delete media item');
                 }}
               >
                 Delete
-              </button>
+              </Button>
             </>
           )}
-        </p>
-      </div>
-    </article>
+      </CardFooter>
+    </Card>
   );
 };
 

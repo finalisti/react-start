@@ -1,7 +1,8 @@
 import {useEffect, useReducer} from 'react';
-import Button from './Button';
 import type {Like, MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {useLike} from '../hooks/apiHooks';
+import {Button} from './ui/button';
+import {ThumbsUp} from 'lucide-react';
 
 type LikesType = {
   item: MediaItemWithOwner | undefined;
@@ -85,13 +86,13 @@ const Likes = ({item}: LikesType) => {
       // If user has liked the media, delete the like. Otherwise, post the like.
       if (likeState.userLike) {
         await deleteLike(likeState.userLike.like_id, token);
+        getLikes();
+        getLikeCount();
       } else {
         await postLike(item.media_id, token);
+        getLikes();
+        getLikeCount();
       }
-
-      // Refresh user like and like count after the operation
-      await getLikes();
-      await getLikeCount();
     } catch (e) {
       console.log('like error', (e as Error).message);
     }
@@ -99,7 +100,13 @@ const Likes = ({item}: LikesType) => {
 
   return (
     <>
-      <Button value={likeState.userLike ? '👎' : '👍'} onClick={handleLike} />
+      <Button variant="ghost" onClick={handleLike}>
+        {likeState.userLike ? (
+          <ThumbsUp fill="white" stroke="black" />
+        ) : (
+          <ThumbsUp />
+        )}
+      </Button>
       <p>Likes: {likeState.count}</p>
     </>
   );

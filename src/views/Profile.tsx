@@ -6,10 +6,10 @@ const Profile = () => {
   return (
     <>
       {user && (
-        <article className="w-full rounded-md bg-stone-600">
+        <article className="bg-card border-border w-full rounded-md border">
           <div className="p-4">
             <h3 className="text-center text-2xl">{user.username}</h3>
-            <div className="my-2 rounded-md border border-stone-400 p-2">
+            <div className="border-input my-2 rounded-md border p-2">
               <p>Email: {user.email}</p>
               <p>User level: {user.level_name}</p>
               <p>

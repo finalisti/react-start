@@ -5,9 +5,9 @@ import SingleView from '../components/SingleView';
 import {useMedia} from '../hooks/apiHooks';
 
 const Home = () => {
-  const [selectedItem, setSelectedItem] = useState<MediaItemWithOwner | undefined>(
-    undefined,
-  );
+  const [selectedItem, setSelectedItem] = useState<
+    MediaItemWithOwner | undefined
+  >(undefined);
 
   const {mediaArray} = useMedia();
 

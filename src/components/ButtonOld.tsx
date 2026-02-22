@@ -3,7 +3,7 @@ type ButtonType = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'basic' | 'danger' | 'warning';
 };
 
-const Button = ({
+const ButtonOld = ({
   value,
   variant = 'basic',
   className = '',
@@ -30,4 +30,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default ButtonOld;

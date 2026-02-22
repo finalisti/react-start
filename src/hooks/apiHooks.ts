@@ -1,4 +1,5 @@
 import type {
+  Comment,
   Like,
   MediaItem,
   MediaItemWithOwner,
@@ -227,4 +228,45 @@ const useLike = () => {
   return {postLike, deleteLike, getCountByMediaId, getUserLike};
 };
 
-export {useMedia, useAuthentication, useUser, useFile, useLike};
+const useComment = () => {
+  const postComment = async (
+    comment_text: string,
+    media_id: number,
+    token: string,
+  ) => {
+    // Send a POST request to /comments with the comment object and the token in the Authorization header.
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({media_id, comment_text}),
+    };
+    return fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/comments',
+      fetchOptions,
+    );
+  };
+
+  const getCommentsByMediaId = async (id: number) => {
+    // Send a GET request to /comments/bymedia/:media_id to get the comments.
+    const comments = await fetchData<Comment[]>(
+      import.meta.env.VITE_MEDIA_API + '/comments/bymedia/' + id,
+    );
+    // Send a GET requests to auth api and add usernames to all comments
+    const commentsWithUsername = Promise.all<Comment & {username: string}>(
+      comments.map(async (comment) => {
+        const userInfo = await fetchData<UserWithNoPassword>(
+          import.meta.env.VITE_AUTH_API + '/users/' + comment.user_id,
+        );
+        return {...comment, username: userInfo.username};
+      }),
+    );
+    return commentsWithUsername;
+  };
+
+  return {postComment, getCommentsByMediaId};
+};
+
+export {useMedia, useAuthentication, useUser, useFile, useLike, useComment};

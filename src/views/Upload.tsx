@@ -1,6 +1,7 @@
 import {useRef, useState} from 'react';
 import useForm from '../hooks/formHooks';
 import {useFile, useMedia} from '../hooks/apiHooks';
+import {Button} from '../components/ui/button';
 
 const Upload = () => {
   const [uploading, setUploading] = useState<boolean>(false);
@@ -58,14 +59,14 @@ const Upload = () => {
       <h1 className="text-center text-2xl font-semibold">Upload</h1>
       <form
         onSubmit={handleSubmit}
-        className="mx-auto mt-4 flex w-full max-w-2xl flex-col gap-4 rounded-md bg-stone-600 p-6 text-stone-50 shadow"
+        className="bg-card text-card-foreground mx-auto mt-4 flex w-full max-w-2xl flex-col gap-4 rounded-md p-6 shadow"
       >
         <div className="flex flex-col gap-1">
           <label className="text-sm font-semibold" htmlFor="title">
             Title
           </label>
           <input
-            className="rounded-md border border-stone-400 bg-stone-700/60 px-3 py-2 text-stone-50 transition outline-none focus:border-stone-200 focus:ring-2 focus:ring-stone-300/40"
+            className="border-input bg-background text-foreground focus:border-ring focus:ring-ring rounded-md border px-3 py-2 transition outline-none focus:ring-2"
             name="title"
             type="text"
             id="title"
@@ -78,7 +79,7 @@ const Upload = () => {
             Description
           </label>
           <textarea
-            className="rounded-md border border-stone-400 bg-stone-700/60 px-3 py-2 text-stone-50 transition outline-none focus:border-stone-200 focus:ring-2 focus:ring-stone-300/40"
+            className="border-input bg-background text-foreground focus:border-ring focus:ring-ring rounded-md border px-3 py-2 transition outline-none focus:ring-2"
             name="description"
             rows={5}
             id="description"
@@ -91,7 +92,7 @@ const Upload = () => {
             File
           </label>
           <input
-            className="block w-full text-sm text-stone-200 file:mr-4 file:rounded-md file:border-0 file:bg-stone-500 file:px-4 file:py-2 file:font-semibold file:text-stone-50 hover:file:bg-stone-700"
+            className="text-muted-foreground file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:px-4 file:py-2 file:font-semibold"
             name="file"
             type="file"
             id="file"
@@ -110,24 +111,26 @@ const Upload = () => {
           alt="preview"
           width="200"
         />
-        <button
-          className="w-full rounded-md bg-stone-500 px-4 py-2 font-semibold transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-60"
+        <Button
+          className="w-full font-semibold"
           type="submit"
           disabled={file && inputs.title.length > 3 ? false : true}
         >
           Upload
-        </button>
+        </Button>
       </form>
       <div className="mx-auto mt-4 w-full max-w-2xl">
-        <button
-          className="w-full rounded-md border border-stone-400 bg-transparent px-4 py-2 font-semibold text-stone-50 transition hover:bg-stone-700"
+        <Button
+          variant="outline"
+          className="w-full font-semibold"
           onClick={resetForm}
         >
           Reset
-        </button>
+        </Button>
       </div>
+
       {uploading && (
-        <p className="mt-3 text-center font-semibold text-stone-50">
+        <p className="text-foreground mt-3 text-center font-semibold">
           Uploading...
         </p>
       )}

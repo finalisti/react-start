@@ -1,5 +1,8 @@
 import type {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import Likes from './Likes';
+import Comments from './Comments';
+import {Button} from './ui/button';
+import {X} from 'lucide-react';
 
 const SingleView = (props: {
   item: MediaItemWithOwner | undefined;
@@ -9,10 +12,19 @@ const SingleView = (props: {
   return (
     <dialog
       open
-      className="fixed inset-0 m-0 grid h-screen w-screen place-items-center border-0 bg-black/60 p-4"
+      className="fixed inset-0 z-50 flex h-full w-full items-start justify-center overflow-y-auto bg-black/60 p-4 pt-12 md:pt-4"
     >
       {item && (
-        <article className="max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-md bg-stone-600 text-stone-50">
+        <article className="bg-card text-card-foreground relative h-fit w-full max-w-4xl rounded-md shadow-xl transition-all">
+          <Button
+            className="absolute top-2 right-2 z-10"
+            onClick={() => {
+              setSelectedItem(undefined);
+            }}
+            variant={'secondary'}
+          >
+            <X />
+          </Button>
           {item.media_type.split('/')[0] === 'image' && (
             <img
               className="max-h-[60vh] w-full rounded-t-md object-contain"
@@ -32,20 +44,14 @@ const SingleView = (props: {
             <Likes item={item} />
             <p>Owner: {item.username}</p>
             <p className="max-w-full">{item.description}</p>
-            <div className="my-2 rounded-md border border-stone-400 p-2">
+            <div className="border-input my-2 rounded-md border p-2">
               <p>
                 Uploaded at {new Date(item.created_at).toLocaleString('fi-FI')}{' '}
                 by user id {item.user_id}
               </p>
             </div>
-            <button
-              className="block w-full bg-stone-500 p-2 text-center transition-all duration-500 ease-in-out hover:bg-stone-700"
-              onClick={() => {
-                setSelectedItem(undefined);
-              }}
-            >
-              Close
-            </button>
+
+            <Comments mediaId={item.media_id} />
           </div>
         </article>
       )}

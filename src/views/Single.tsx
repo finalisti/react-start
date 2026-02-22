@@ -1,5 +1,6 @@
 import type {MediaItem} from 'hybrid-types/DBTypes';
 import {useLocation, useNavigate} from 'react-router';
+import {Button} from '../components/ui/button';
 
 const Single = () => {
   const navigate = useNavigate();
@@ -11,8 +12,9 @@ const Single = () => {
     <dialog open>
       {item && (
         <>
-          <button onClick={() => navigate(-1)}>Go back</button>
+          <Button onClick={() => navigate(-1)}>Go back</Button>
           <h2>{item.title}</h2>
+
           {item.media_type.split('/')[0] === 'image' && (
             <img src={item.filename} alt={item.description || item.title} />
           )}

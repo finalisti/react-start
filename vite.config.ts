@@ -1,15 +1,21 @@
-/// <reference types="vitest/config" /> // https://vitest.dev/config/
+/// <reference types="vitest/config" />
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  base: '/~laurslaa/zustand/',
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: './vitest-setup.js',
+    setupFiles: './vitest.setup.ts',
   },
-  base: '/~laurslaa/likes/',
 });

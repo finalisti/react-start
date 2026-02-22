@@ -1,4 +1,5 @@
 import {useReducer} from 'react';
+import {Button} from './ui/button';
 
 type State = {
   count: number;
@@ -28,8 +29,8 @@ const Counter = () => {
   return (
     <>
       Count: {state.count}
-      <button onClick={() => dispatch({type: 'increment'})}>+</button>
-      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <Button onClick={() => dispatch({type: 'increment'})}>+</Button>
+      <Button onClick={() => dispatch({type: 'decrement'})}>-</Button>
     </>
   );
 };
