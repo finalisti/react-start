@@ -5,7 +5,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
   --card: oklch(1 0 0);
@@ -40,7 +40,7 @@
   --sidebar-ring: oklch(0.709 0.01 56.259);
 }
 
-.dark {
+:root {
   --background: oklch(0.147 0.004 49.25);
   --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(0.216 0.006 56.043);
